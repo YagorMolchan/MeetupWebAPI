@@ -45,3 +45,5 @@ C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\obj\Debug\net6.0\Meetu
 C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\obj\Debug\net6.0\MeetupWebAPI.WEB.genruntimeconfig.cache
 C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\obj\Debug\net6.0\ref\MeetupWebAPI.WEB.dll
 C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\obj\Debug\net6.0\MeetupWebAPI.WEB.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\bin\Debug\net6.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\molch\source\repos\MeetupWebAPI\MeetupWebAPI.WEB\bin\Debug\net6.0\Microsoft.Extensions.DependencyModel.dll

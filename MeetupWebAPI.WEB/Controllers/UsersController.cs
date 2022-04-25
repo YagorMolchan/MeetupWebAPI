@@ -32,8 +32,12 @@ namespace MeetupWebAPI.WEB.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult<RegisterResponse>> Register(RegisterRequest registerRequest)
         {
-            User user = null;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            User user = null;
             if (await _userRepo.HasUser(registerRequest.UserName))
             {
                 return BadRequest("UserName is already taken!!!");
@@ -46,7 +50,7 @@ namespace MeetupWebAPI.WEB.Controllers
                     FirstName = registerRequest.FirstName,
                     LastName = registerRequest.LastName,
                     UserName = registerRequest.UserName,
-                    PasswordHash = hma5.ComputeHash(Encoding.UTF8.GetBytes(registerRequest.Password)),
+                    PasswordHash = hma5.ComputeHash(Encoding.UTF8.GetBytes(registerRequest.ConfirmPassword)),
                     PasswordSalt = hma5.Key
                 };
 
@@ -60,8 +64,13 @@ namespace MeetupWebAPI.WEB.Controllers
         }
 
         [HttpPost("Authenticate")]
-        public async Task<ActionResult<AuthenticateResponse>> Login(AuthenticateRequest loginRequest)
+        public async Task<ActionResult<AuthenticateResponse>> Authenticate(AuthenticateRequest loginRequest)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var user = await _userRepo.GetUserByName(loginRequest.UserName);
             if (user == null)
             {
@@ -93,6 +102,7 @@ namespace MeetupWebAPI.WEB.Controllers
             {
                 return Unauthorized("You are not authorized!");
             }
+
             var meetup = await _meetupRepo.GetMeetupById(meetupId);
             if (meetup == null)
             {
@@ -102,6 +112,7 @@ namespace MeetupWebAPI.WEB.Controllers
             {
                 return BadRequest("You are already registered for this meetup. Please choose another");
             }
+
             _userRepo.AttachMeetupToUser(user, meetup);
             await _userRepo.SaveAsync();
             var userDTO = _mapper.Map<UserDTO>(user);

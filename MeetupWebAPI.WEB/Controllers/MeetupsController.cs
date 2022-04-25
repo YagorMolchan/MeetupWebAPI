@@ -16,7 +16,6 @@ namespace MeetupWebAPI.WEB.Controllers
     public class MeetupsController : ControllerBase
     {
         private readonly IMeetupRepository _meetupRepo;
-        //private readonly IUrlHelper _urlHelper;
         private readonly IMapper _mapper;
 
         public MeetupsController(IMeetupRepository meetupRepo, IMapper mapper)
@@ -72,6 +71,7 @@ namespace MeetupWebAPI.WEB.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var meetup = _mapper.Map<Meetup>(meetupDTO);
             _meetupRepo.CreateMeetup(meetup);
             await _meetupRepo.SaveAsync();
@@ -104,6 +104,7 @@ namespace MeetupWebAPI.WEB.Controllers
             {
                 return NotFound();
             }
+
             _meetupRepo.DeleteMeetup(meetup);
             await _meetupRepo.SaveAsync();
             return NoContent();
@@ -118,21 +119,33 @@ namespace MeetupWebAPI.WEB.Controllers
                     {
                         PageNumber = parameters.PageNumber - 1,
                         PageSize = parameters.PageSize,
-                        SortingType = parameters.SortingType
+                        SortingType = parameters.SortingType,
+                        StartDate = parameters.StartDate,
+                        FinishDate = parameters.FinishDate,
+                        Name = parameters.Name,
+                        Place = parameters.Place
                     });
                 case ResourceUriType.Next:
                     return Url.RouteUrl("GetMeetups", new
                     {
                         PageNumber = parameters.PageNumber + 1,
                         PageSize = parameters.PageSize,
-                        SortingType = parameters.SortingType
+                        SortingType = parameters.SortingType,
+                        StartDate = parameters.StartDate,
+                        FinishDate = parameters.FinishDate,
+                        Name = parameters.Name,
+                        Place = parameters.Place
                     });
                 default:
                     return Url.RouteUrl("GetMeetups", new
                     {
                         PageNumber = parameters.PageNumber,
                         PageSize = parameters.PageSize,
-                        SortingType = parameters.SortingType
+                        SortingType = parameters.SortingType,
+                        StartDate = parameters.StartDate,
+                        FinishDate = parameters.FinishDate,
+                        Name = parameters.Name,
+                        Place = parameters.Place
                     });
 
             }
